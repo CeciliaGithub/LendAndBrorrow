@@ -14,5 +14,6 @@ namespace InAndOut.Data
 
         }
         public DbSet <Item> items { get; set; }
+        public DbSet<Expense> expenses { get; set; }
     }
 }
