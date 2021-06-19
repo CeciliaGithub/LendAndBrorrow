@@ -32,9 +32,13 @@ namespace InAndOut.Controllers
         public IActionResult Create(Expense obj)
         {
             //  IEnumerable<Item> objList = _db.items;
-            _db.expenses.Add(obj);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _db.expenses.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
         }
     }
 }

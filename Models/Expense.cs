@@ -10,9 +10,13 @@ namespace InAndOut.Models
     public class Expense
     {
         [Key]
+    
         public int ExpenseId { get; set; }
         [DisplayName("Expense")]
+        [Required]
         public string ExpenseName { get; set; }
+        [Required]
+        [Range(1,int.MaxValue,ErrorMessage ="Amount must be greater than 1")]
         public int Price { get; set; }
     }
 }
