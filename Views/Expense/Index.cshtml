@@ -17,17 +17,23 @@
         <tr>
             <th> Expense Name</th>
             <th> Price </th>
-            
+            <th> Changes </th>
+           
+
         </tr>
     </thead>
     <tbody>
         @foreach (var Expense in Model)
         {
-            <tr>
-                <td width="50%">@Expense.ExpenseName</td>
-                <td width="50%">@Expense.Price</td>
-              
-            </tr>
+        <tr>
+            <td width="35%">@Expense.ExpenseName</td>
+            <td width="35%">@Expense.Price</td>
+            <td width="30%"><div class="w-100 btn-group" role="group">
+    <a asp-area="" asp-controller="Expense" asp-action="Update" asp-route-id=@Expense.ExpenseId class="btn btn-primary mx-1"> Update</a>
+    <a asp-area="" asp-controller="Expense" asp-action="Delete" class="btn btn-danger mx-1"> Delete</a>
+</div></td>
+            
+        </tr>
         }
     </tbody>
 

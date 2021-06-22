@@ -11,30 +11,92 @@ namespace InAndOut.Controllers
     public class ExpenseController : Controller
     {
         private readonly ApplicationDbContext _db;
+
         public ExpenseController(ApplicationDbContext db)
         {
             _db = db;
         }
+
+
         public IActionResult Index()
         {
             IEnumerable<Expense> objList = _db.expenses;
-          
             return View(objList);
+
         }
+
+        // GET-Create
         public IActionResult Create()
         {
-          //  IEnumerable<Item> objList = _db.items;
             return View();
         }
-        //post
+
+        // POST-Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Expense obj)
         {
-            //  IEnumerable<Item> objList = _db.items;
             if (ModelState.IsValid)
             {
                 _db.expenses.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+        }
+
+        // GET-Delete
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var obj = _db.expenses.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        // POST-Delete
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePost(int? id)
+        {
+            var obj = _db.expenses.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            _db.expenses.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        // GET-Update
+        public IActionResult Update(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var obj = _db.expenses.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+        // POST-Update
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(Expense obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.expenses.Update(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
